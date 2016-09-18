@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/appbottom" android:orientation="vertical" android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+		xmlns:android="http://schemas.android.com/apk/res/android">
+		
+	<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" android:background="@drawable/light">
+		<ImageView  android:id="@+id/about" android:layout_width="30px" android:layout_height="wrap_content" android:src="@drawable/ttt"
+				android:layout_alignParentLeft="true"/>
+		<TextView android:id="@+id/light" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textColor="@color/black"/>
+	</LinearLayout>
+	
+	<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" android:background="@drawable/mainmenu">
+		
+<!-- 	       <ImageButton
+        android:id="@+id/id_title_left_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/showleft_selector" /> -->
+		
+		<ImageButton android:id="@+id/weixinButton" 
+		    android:layout_weight="1" 
+		    android:layout_width="52px" 
+		    android:layout_height="wrap_content"
+			android:textColor="@color/white" 
+			android:text="@string/weixin_button" 
+			android:background="@drawable/button1"/>
+			
+		<ImageButton android:id="@+id/friendButton" 
+		    android:layout_weight="1" 
+		    android:layout_width="52px" 
+		    android:layout_height="wrap_content"
+			android:textColor="@color/white" 
+			android:text="@string/friend_button" 
+			android:background="@drawable/button1"/>
+		
+		<ImageButton android:id="@+id/discoverButton" 
+		    android:layout_weight="1" 
+		    android:layout_width="52px" 
+		    android:layout_height="wrap_content"
+			android:textColor="@color/white" 
+			android:text="@string/discover_button" 
+			android:background="@drawable/button1"/>
+		
+		<ImageButton android:id="@+id/meButton" 
+		    android:layout_weight="1" 
+		    android:layout_width="52px" 
+		    android:layout_height="wrap_content"
+			android:textColor="@color/white" 
+			android:text="@string/me_button" 
+			android:background="@drawable/button1"/>		
+		
+		
+
+	</LinearLayout>
+</LinearLayout>

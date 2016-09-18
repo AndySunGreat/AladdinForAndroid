@@ -1,15 +1,26 @@
-package com.prgguru.example;
+package com.aladdin.questionbank.login;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.aladdin.questionbank.R.id;
+import com.aladdin.questionbank.R.layout;
+import com.aladdin.questionbank.home.HomeActivity;
+import com.aladdin.questionbank.util.Constants;
+import com.aladdin.questionbank.util.Utility;
 import com.loopj.android.http.*;
+import com.aladdin.questionbank.R;
 import cz.msebera.android.httpclient.Header;
 
 import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +29,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
-	private EditText loginEmail;
+	private EditText loginAccountNumber;
 	private EditText loginPassword;
 	private TextView registerError;
 	private Button btnLogin;
@@ -29,7 +40,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		loginEmail = (EditText) findViewById(R.id.loginEmail);
+		loginAccountNumber = (EditText) findViewById(R.id.loginAccountNumber);
 		loginPassword = (EditText) findViewById(R.id.loginPassword);
 		registerError = (TextView) findViewById(R.id.register_error);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -41,15 +52,15 @@ public class LoginActivity extends Activity {
 	
 	public void loginUser(View view){
 		// Get Email Edit View Value
-		String strLoginEmail = loginEmail.getText().toString();
+		String strLoginAccountNumber = loginAccountNumber.getText().toString();
 		// Get Password  Edit View Value
 		String strLoginPassword = loginPassword.getText().toString();		
 		// Instantiate Http request params Object
 		RequestParams params= new RequestParams();
 		// When Email Edit View and Password Edit View have values other than Null
-		if(Utility.isNotNull(strLoginEmail)&&Utility.isNotNull(strLoginPassword)){
-			if(Utility.validate(strLoginEmail)){
-				params.put("username", strLoginEmail);
+		if(Utility.isNotNull(strLoginAccountNumber)&&Utility.isNotNull(strLoginPassword)){
+			if(Utility.validate(strLoginAccountNumber)){
+				params.put("username", strLoginAccountNumber);
 				params.put("password", strLoginPassword);
 				// invoke RESTFUL web service with http parameters
 				invokeWS(params);
@@ -72,25 +83,51 @@ public class LoginActivity extends Activity {
 		progress.show();
 		// Make RESTful webservice call using AsyncHttpClient object
 		AsyncHttpClient client = new AsyncHttpClient();
-		client.get(Constants.restfulEndpoints+Constants.getCustomersById, params,new JsonHttpResponseHandler(){
+		String url = Constants.restfulEndpoints + Constants.getCustomersById;
+		Toast.makeText(this, "发送请求到服务器...", Toast.LENGTH_LONG).show(); 
+		client.get(url, params,new JsonHttpResponseHandler(){
 			@Override
 			public void onStart(){
 				// called before request is started
 			}
-
+			
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONArray jaobj) {
+				super.onSuccess(statusCode, headers, jaobj);  
+				// called when response HTTP status is "200 OK"
+				progress.hide();
+				if(statusCode ==200){
+					// 存储数组变量
+					 List<String> objects = new ArrayList<String>();  
+	                    for (int i = 0; i < jaobj.length(); i++) {  
+	                        try {  
+	                            // 获取具体的一个JSONObject对象  
+	                            JSONObject obj = jaobj.getJSONObject(i);  
+	                            Log.i("LoginActivity-invokeWS-QuestionId:", obj.getInt("questionId") + "");
+	                            objects.add(obj.getString("questionSubject"));  
+	                        } catch (JSONException e) {  
+	                            // TODO Auto-generated catch block  
+	                            e.printStackTrace();  
+	                        }  
+	                    } 
+	                    
+				}
+				//Navigate to Home Screen
+				navigatetoHomeActivity();
+			}
 			// When the response returned by REST has Http response code '200'
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject obj) {
 				// called when response HTTP status is "200 OK"
 				progress.hide();
 				try{
-					if(obj.getInt("id")!=0){
+					if(obj.getInt("questionId")!=0){
 						Toast.makeText(getApplicationContext(), "You are successfully logged in!", Toast.LENGTH_LONG).show();
 						//Navigate to Home Screen
 						navigatetoHomeActivity();
 					}else{
-						registerError.setText(obj.getString("content"));
-                   	 	Toast.makeText(getApplicationContext(), obj.getString("content"), Toast.LENGTH_LONG).show();
+						registerError.setText(obj.getString("questionSubject"));
+                   	 	Toast.makeText(getApplicationContext(), obj.getString("questionSubject"), Toast.LENGTH_LONG).show();
 					}
 				}catch(JSONException e){
 					 Toast.makeText(getApplicationContext(), "Error Occured [Server's JSON response might be invalid]!", Toast.LENGTH_LONG).show();

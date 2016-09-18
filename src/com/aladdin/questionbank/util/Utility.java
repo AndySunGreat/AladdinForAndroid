@@ -1,4 +1,4 @@
-package com.prgguru.example;
+package com.aladdin.questionbank.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

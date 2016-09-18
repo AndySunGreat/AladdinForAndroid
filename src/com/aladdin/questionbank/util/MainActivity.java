@@ -1,4 +1,8 @@
-package com.prgguru.example;
+package com.aladdin.questionbank.util;
+import com.aladdin.questionbank.R;
+import com.aladdin.questionbank.R.id;
+import com.aladdin.questionbank.R.layout;
+import com.aladdin.questionbank.R.menu;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

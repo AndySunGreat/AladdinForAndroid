@@ -1,12 +1,17 @@
-package com.prgguru.example;
+package com.aladdin.questionbank.login;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.aladdin.questionbank.R.id;
+import com.aladdin.questionbank.R.layout;
+import com.aladdin.questionbank.util.Constants;
+import com.aladdin.questionbank.util.Utility;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.aladdin.questionbank.R;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -108,7 +113,7 @@ public class RegisterActivity extends Activity{
             	 prgDialog.hide();
                  try {
                          // When the JSON response has status boolean value assigned with true
-                         if(obj.getInt("id")!=0){
+                         if(obj.getInt("questionId")!=0){
                         	 // Set Default Values for Edit View controls
                         	 setDefaultValues();
                         	 // Display successfully registered message using Toast
@@ -116,8 +121,8 @@ public class RegisterActivity extends Activity{
                          } 
                          // Else display error message
                          else{
-                        	 errorMsg.setText(obj.getString("content"));
-                        	 Toast.makeText(getApplicationContext(), obj.getString("content"), Toast.LENGTH_LONG).show();
+                        	 errorMsg.setText(obj.getString("questionSubject"));
+                        	 Toast.makeText(getApplicationContext(), obj.getString("questionSubject"), Toast.LENGTH_LONG).show();
                          }
                  } catch (JSONException e) {
                      // TODO Auto-generated catch block

@@ -7,7 +7,13 @@
 	<string name="title_activity_login">Login</string>
 	<string name="title_activity_home">Home</string>
 	<string name="register_title">Register</string>
+	<string name="login_label_account">登录帐号</string>
+	<string name="login_label_password">登录密码</string>
 	<string name="login_title">Login</string>
+	<string name="weixin_button">微信</string>
+	<string name="friend_button">朋友圈</string>
+	<string name="discover_button">发现</string>
+	<string name="me_button">我</string>
 	<string name="name">Name</string>
     <string name="email">Email</string>
     <string name="pwd">Password</string>
